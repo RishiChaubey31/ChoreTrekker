@@ -1,0 +1,170 @@
+body {
+    background-color: black;
+    color: wheat;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.heading{
+    font-size: 80px;
+    box-shadow: 0px 1px wheat;
+    margin:0px 0px;
+}
+.wrapper {
+    display: flex;
+    max-width: 90%;
+    margin-top: 20px;
+}
+
+.wrapper .static-txt {
+    color: #fff;
+    font-size: 5vw;
+    font-weight: 400;
+}
+
+.dynamic-txts {
+    margin-left: 15px;
+    height: auto;
+    line-height: 1;
+    overflow: hidden;
+    border: 2px solid wheat;
+    box-shadow: 2px 8px wheat;
+    padding: 0px 0px;
+}
+
+.dynamic-txts li {
+    list-style: none;
+    color: wheat;
+    font-size: 5vw;
+    font-weight: 500;
+    position: relative;
+    top: 0;
+    animation: slide 12s linear infinite;
+}
+
+@keyframes slide {
+    0% {
+        top: 0;
+    }
+    100% {
+        top: calc(-4 * 5vw - 4 * 5px); /* Adjust distance based on font size and margin */
+    }
+}
+
+.dynamic-txts li span {
+    position: relative;
+    margin: 5px 0;
+    line-height: 1;
+    
+}
+
+.dynamic-txts li span::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: black;
+    border-left: 2px solid black;
+    animation: typing 1s steps(10) infinite;
+}
+
+@keyframes typing {
+    40%, 60% {
+        left: calc(100% + 30px);
+    }
+    100% {
+        left: 0;
+    }
+}
+.landingButton{
+   height: 50px;
+   width: 100px;
+   border-radius: 50px;
+   background-color: wheat;
+   font-weight: 700;
+}
+.gifs{
+    height:200px;
+    width:200px
+}
+.mainDiv{
+    border:2px solid wheat;
+    display: flex;
+    justify-content:center ;
+    align-items: center;
+    flex-direction: column;
+    flex-wrap: wrap;
+   height: 200px;
+    width: 50%;
+}
+input{
+    background-color: wheat;
+    height:40px;
+    width:400px;
+
+
+}
+form{
+    display: flex;
+    flex-direction: column;
+}
+#whole_content{
+    display: flex;
+    flex-wrap: wrap;
+    box-shadow:20px 25px 20px rgb(110, 73, 5) ;
+
+}
+#container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px solid wheat;
+    height: 500px;
+    width: 500px;
+
+}
+#todos{
+    border: 2px solid wheat;
+    height: 500px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wraper;
+    flex-direction: column;
+}
+#title{
+    height: 50px;
+    width:250px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-weight: 900;
+    font-family:cursive;
+}
+#description{
+    height: 50px;
+    width:250px;
+    margin-bottom: 25px;
+    border-radius: 10px;
+    font-weight: 900;
+    font-family:cursive;  
+}
+#button{
+    height: 50px;
+    width:250px;
+    border-radius: 10px;
+    background-color: wheat;
+    font-weight: 900;
+    font-family:cursive;
+}
+.chorehead{
+    font-family: cursive;
+    text-shadow:10px 10px 20px  wheat ;
+    text-decoration:underline;
+    font-size: 80px;
+    color: rgb(210, 105, 30);
+}

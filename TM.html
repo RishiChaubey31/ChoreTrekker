@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your todos</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <script>
+      function getToken() {
+        return localStorage.getItem("token");
+      }
+      // Function to send a task to the server for storage
+      async function addtodo() {
+        const title = document.getElementById("title").value;
+        const description = document.getElementById("description").value;
+        const token = getToken();
+        try {
+          const response = await fetch("http://localhost:5500/tasks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`, // Include the authentication token in the request headers
+            },
+            body: JSON.stringify({ title, description }),
+          });
+
+          if (response.ok) {
+            alert("Task added successfully!");
+            // Refresh the task list after adding a task
+            getTasks();
+          } else {
+            alert("Failed to add task.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      // Function to retrieve tasks associated with the current user
+      // Function to retrieve tasks associated with the current user
+      async function getTasks() {
+        try {
+          const token = getToken(); // Retrieve the authentication token
+          const response = await fetch("http://localhost:5500/tasks", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const tasks = await response.json();
+            displayTasks(tasks);
+          } else {
+            console.error("Failed to fetch tasks.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      // Function to display tasks on the page
+      function displayTasks(tasks) {
+        const todos = document.getElementById("todos");
+        todos.innerHTML = ""; // Clear existing tasks
+
+        tasks.forEach((task) => {
+          const taskElement = createTaskElement(task);
+          todos.appendChild(taskElement);
+        });
+      }
+
+      // Helper function to create HTML elements for a task
+      function createTaskElement(task) {
+        const taskDiv = document.createElement("div");
+        taskDiv.setAttribute(
+          "style",
+          "border: 2px solid wheat; box-shadow: 2px 5px 3px wheat; margin: 10px 10px"
+        );
+
+        const titleDiv = document.createElement("div");
+        titleDiv.innerHTML = task.title;
+        titleDiv.setAttribute(
+          "style",
+          "font-weight: bold; font-family: cursive"
+        );
+
+        const descriptionDiv = document.createElement("div");
+        descriptionDiv.innerHTML = task.description;
+        descriptionDiv.setAttribute(
+          "style",
+          "font-weight: bold; font-family: cursive"
+        );
+
+        const doneButton = document.createElement("button");
+        doneButton.innerHTML = task.completed ? "Completed" : "Mark as Done";
+        doneButton.setAttribute("style", "margin-top: 5px;");
+        doneButton.addEventListener("click", async () => {
+          try {
+            const token = getToken();
+            const response = await fetch(
+              `http://localhost:5500/tasks/${task._id}/complete`,
+              {
+                method: "PUT",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+              }
+            );
+
+            if (response.ok) {
+              // If the task was marked as done successfully, update the button and style
+              task.completed = true;
+              doneButton.innerHTML = "Completed";
+              titleDiv.style.textDecoration = "line-through";
+              descriptionDiv.style.textDecoration = "line-through"; // Add strikethrough style to the title
+            } else {
+              alert("Failed to mark task as done.");
+            }
+          } catch (error) {
+            console.error(error);
+            alert("An error occurred. Please try again.");
+          }
+        });
+
+        taskDiv.appendChild(titleDiv);
+        taskDiv.appendChild(descriptionDiv);
+        taskDiv.appendChild(doneButton);
+
+        if (task.completed) {
+          titleDiv.style.textDecoration = "line-through"; // Add strikethrough style if the task is already completed
+        }
+        return taskDiv;
+      }
+
+      // Call getTasks() when the page loads to fetch and display tasks
+      window.onload = getTasks;
+    </script>
+    <h1 class="chorehead">Here are your chores...</h1>
+    <div id="whole_content">
+      <div id="container">
+        <h1 style="text-decoration: underline">ADD CHORES</h1>
+        <input id="title" type="text" placeholder="Title here" />
+        <input id="description" type="text" placeholder="Description here" />
+        <button id="button" onclick="addtodo()">Add Todo</button>
+      </div>
+      <div id="todos">
+        <h1 style="text-decoration: underline">TASKS</h1>
+      </div>
+    </div>
+  </body>
+</html>

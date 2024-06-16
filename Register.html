@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Page</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>Register</h1>
+    <form id="registrationForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required />
+      <br />
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+      <br />
+      <input type="submit" value="Register" />
+    </form>
+    <p>already a Chore Trekker ?  <a href="/login.html" style="color:rgb(22, 131, 174); text-decoration: none; ">Login</a></p>
+    <script>
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (event) {
+          
+          event.preventDefault();
+
+          const formData = new FormData(this);
+          fetch("http://localhost:5500/Register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(formData).toString(),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                throw new Error("Failed to register");
+              }
+              return response.json();
+            })
+            .then(data => {
+            if (data.success) {
+                alert("User registered successfully!");
+                window.location.href = "/login.html";
+            } else {
+                alert("user already exist"); // Display alert for existing username
+            }
+        })
+        .catch((error) => {
+        console.error("Error:", error);
+        alert("Failed to register");
+      });
+    });
+    </script>
+  </body>
+</html>
