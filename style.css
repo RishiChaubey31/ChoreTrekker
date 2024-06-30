@@ -136,6 +136,7 @@ form{
     align-items: center;
     flex-wrap: wraper;
     flex-direction: column;
+    overflow-y: auto;
 }
 #title{
     height: 50px;
