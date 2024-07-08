@@ -7,7 +7,7 @@ const cors=require("cors");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const app = express();
-const port = 5500;
+const port = process.env.port || 5500;
 const secretKey = process.env.JWT_SECRET;
 
 // Connect to MongoDB
