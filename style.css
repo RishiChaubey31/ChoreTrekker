@@ -1,6 +1,8 @@
 body {
-    background-color:black;
-    color: wheat;
+    background: linear-gradient(to bottom,black,rgb(47, 4, 79));
+    background-attachment: fixed;
+    overflow-x: hidden;
+    color: red;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
@@ -9,9 +11,14 @@ body {
 }
 .heading{
     font-size: 80px;
-    box-shadow: 0px 1px wheat;
+    box-shadow: 0px 10px rgb(117, 10, 58);
     margin:0px 0px;
-}
+    font-family:cursive;
+    background: linear-gradient(180deg, #ff7e5f,rgb(141, 12, 12), #ed7bfe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
 .wrapper {
     display: flex;
     max-width: 90%;
@@ -29,19 +36,21 @@ body {
     height: auto;
     line-height: 1;
     overflow: hidden;
-    border: 2px solid wheat;
-    box-shadow: 2px 8px wheat;
+    border: 2px solid rgb(112, 6, 6);
+    box-shadow: 2px 8px rgb(112, 6, 6);
+    border-radius: 10px;
     padding: 0px 0px;
 }
 
 .dynamic-txts li {
+    font-family: cursive;
     list-style: none;
-    color: wheat;
+    color: rgb(127, 15, 60);
     font-size: 5vw;
     font-weight: 500;
     position: relative;
     top: 0;
-    animation: slide 12s linear infinite;
+    animation: slide 10s linear infinite;
 }
 
 @keyframes slide {
@@ -66,8 +75,6 @@ body {
     left: 0;
     height: 100%;
     width: 100%;
-    background: black;
-    border-left: 2px solid black;
     animation: typing 1s steps(10) infinite;
 }
 
@@ -79,19 +86,33 @@ body {
         left: 0;
     }
 }
-.landingButton{
-   height: 50px;
-   width: 100px;
-   border-radius: 50px;
-   background-color: wheat;
-   font-weight: 700;
+
+.landingButton {
+    margin: 30px 10px;
+    font-weight: 700;
+    border:none;
+    color: white;
+    height: 50px;
+    width: 100px;
+    border-radius: 50px;
+    background-color:  rgb(112, 6, 6);
+    box-shadow: 0 0 5px  rgb(112, 6, 6), 0 0 25px  rgb(112, 6, 6);  
+}
+.landingButton:hover {
+    box-shadow: 0 0 5px  rgb(112, 6, 6), 0 0 25px  rgb(112, 6, 6), 0 0 50px  rgb(112, 6, 6), 0 0 100px  rgb(112, 6, 6);
 }
 .gifs{
     height:200px;
-    width:200px
+    width:200px;
+    border-radius: 50%;
+    
+}
+
+.gifs:hover {
+    box-shadow: 0 0 5px rgb(226, 43, 137), 0 0 25px rgb(226, 43, 183), 0 0 50px rgb(226, 43, 144), 0 0 100px  rgb(112, 6, 6);
 }
 .mainDiv{
-    border:2px solid wheat;
+    border:2px solid rgb(205, 4, 98);
     display: flex;
     justify-content:center ;
     align-items: center;
@@ -101,7 +122,7 @@ body {
     width: 50%;
 }
 input{
-    background-color: wheat;
+    background-color: rgb(218, 179, 245);
     height:40px;
     width:300px;
 
@@ -114,7 +135,7 @@ form{
 #whole_content{
     display: flex;
     flex-wrap: wrap;
-    box-shadow:20px 25px 20px rgb(110, 73, 5) ;
+    box-shadow:20px 25px 20px rgb(85, 5, 110) ;
 
 }
 #container{
@@ -122,13 +143,13 @@ form{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    border: 2px solid wheat;
+    border: 2px solid rgb(71, 6, 38);
     height: 500px;
     width: 500px;
 
 }
 #todos{
-    border: 2px solid wheat;
+    border: 2px solid rgb(58, 4, 34);
     height: 500px;
     width: 500px;
     display: flex;
@@ -137,6 +158,7 @@ form{
     flex-wrap: wraper;
     flex-direction: column;
     overflow-y: auto;
+    color: white;
 }
 #title{
     height: 50px;
@@ -158,14 +180,15 @@ form{
     height: 50px;
     width:250px;
     border-radius: 10px;
-    background-color: wheat;
+    background-color: rgb(245, 179, 215);
     font-weight: 900;
     font-family:cursive;
+    
 }
 .chorehead{
     font-family: cursive;
-    text-shadow:10px 10px 20px  wheat ;
+    text-shadow:10px 10px 20px  rgb(182, 179, 245) ;
     text-decoration:underline;
     font-size: 80px;
-    color: rgb(210, 105, 30);
+    color: rgb(210, 30, 96);
 }
