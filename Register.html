@@ -72,40 +72,43 @@
         }
       });
 
-      document
-        .getElementById("registrationForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-    
-          const formData = new FormData(this);
-          fetch("https://chore-trekker.vercel.app/Register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: new URLSearchParams(formData).toString(),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                return response.json().then(data => {
-                  throw new Error(data.message || "Failed to register");
-                });
-              }
-              return response.json();
-            })
-            .then((data) => {
-              if (data.success) {
-                alert("User registered successfully!");
-                window.location.href = "/login.html";
-              } else {
-                alert("User already exists");
-              }
-            })
-            .catch((error) => {
-              console.error("Error:", error);
-              alert(error.message);
-            });
+      document.getElementById("registrationForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const formData = {
+    username: document.getElementById("username").value,
+    password: document.getElementById("password").value
+  };
+
+  fetch("https://chore-trekker.vercel.app/register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.message || "Failed to register");
         });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success) {
+        alert("User registered successfully!");
+        window.location.href = "/login.html";
+      } else {
+        alert("User already exists");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert(error.message);
+    });
+});
+
     </script>    
   </body>
 </html>
