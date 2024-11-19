@@ -80,7 +80,7 @@
     password: document.getElementById("password").value
   };
 
-  fetch("https://chore-trekker.vercel.app/register", {
+  fetch("/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
