@@ -62,7 +62,7 @@ const taskSchema = new mongoose.Schema({
 const Task = mongoose.model("Task", taskSchema);
 
 // Middleware
-app.use(cors());
+app.use(cors({ origin: "*" ,credentials:true})); 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 

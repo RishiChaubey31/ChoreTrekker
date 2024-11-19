@@ -14,7 +14,7 @@ body {
     min-height: 100vh;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     color: #e0e0e0;
-   // overflow: hidden;
+    /* overflow: hidden; */
 }
 
 /* Heading Style */
