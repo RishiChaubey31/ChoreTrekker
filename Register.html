@@ -12,47 +12,103 @@
     <form id="registrationForm">
       <label for="username">Username:</label>
       <input type="text" placeholder="username" id="username" name="username" required />
+      <div id="usernameRequirements">
+        <p id="usernameLength" class="requirement">Username must be between 3 and 20 characters long</p>
+        <p id="usernamePattern" class="requirement">Username can only contain letters, numbers, underscores, and dots</p>
+      </div>
       <br />
       <label for="password">Password:</label>
       <input type="password" placeholder="password" id="password" name="password" required />
+      <div id="passwordRequirements">
+        <p id="passwordLength" class="requirement">Password must be at least 5 characters long</p>
+        <p id="number" class="requirement">Must contain at least one number</p>
+        <p id="special" class="requirement">Must contain at least one special character (!@#$%^&*)</p>
+        <p id="noSpaces" class="requirement">Cannot contain spaces</p>
+      </div>
       <br />
       <input type="submit" value="Register" />
     </form>
-    <p>already a Chore Trekker ?  <a href="/login.html" style="color:rgb(22, 131, 174); text-decoration: none; ">Login</a></p>
+    <p>already a Chore Trekker ? <a href="/login.html" style="color:rgb(22, 131, 174); text-decoration: none;">Login</a></p>
     <script>
-      document
-        .getElementById("registrationForm")
-        .addEventListener("submit", function (event) {
-          
-          event.preventDefault();
+      document.getElementById("username").addEventListener("input", function () {
+        const username = this.value;
 
-          const formData = new FormData(this);
-          fetch("http://localhost:5500/Register", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            body: new URLSearchParams(formData).toString(),
-          })
-            .then((response) => {
-              if (!response.ok) {
-                throw new Error("Failed to register");
-              }
-              return response.json();
-            })
-            .then(data => {
-            if (data.success) {
-                alert("User registered successfully!");
-                window.location.href = "/login.html";
-            } else {
-                alert("user already exist"); // Display alert for existing username
-            }
-        })
-        .catch((error) => {
-        console.error("Error:", error);
-        alert("Failed to register");
+        // Define each requirement with regex tests
+        const requirements = {
+          usernameLength: username.length >= 3 && username.length <= 20,
+          usernamePattern: /^[a-zA-Z0-9._]+$/.test(username),
+        };
+
+        // Update each requirement message's class based on whether the condition is met
+        for (const [id, isValid] of Object.entries(requirements)) {
+          const element = document.getElementById(id);
+          if (isValid) {
+            element.classList.add("valid");
+          } else {
+            element.classList.remove("valid");
+          }
+        }
       });
+
+      document.getElementById("password").addEventListener("input", function () {
+        const password = this.value;
+
+        // Define each requirement with regex tests
+        const requirements = {
+          passwordLength: password.length >= 5,
+          number: /\d/.test(password),
+          special: /[!@#$%^&*(),.?":{}|<>]/.test(password),
+          noSpaces: !/\s/.test(password),
+        };
+
+        // Update each requirement message's class based on whether the condition is met
+        for (const [id, isValid] of Object.entries(requirements)) {
+          const element = document.getElementById(id);
+          if (isValid) {
+            element.classList.add("valid");
+          } else {
+            element.classList.remove("valid");
+          }
+        }
+      });
+
+      document.getElementById("registrationForm").addEventListener("submit", function (event) {
+  event.preventDefault();
+
+  const formData = {
+    username: document.getElementById("username").value,
+    password: document.getElementById("password").value
+  };
+
+  fetch("https://chore-trekker.vercel.app/Register", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then(data => {
+          throw new Error(data.message || "Failed to register");
+        });
+      }
+      return response.json();
+    })
+    .then((data) => {
+      if (data.success) {
+        alert("User registered successfully!");
+        window.location.href = "/login.html";
+      } else {
+        alert("User already exists");
+      }
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      alert(error.message);
     });
-    </script>
+});
+
+    </script>    
   </body>
 </html>
