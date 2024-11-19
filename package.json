@@ -8,6 +8,11 @@
     "init": "^0.1.2",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.3.2",
-    "path": "^0.12.7"
-  }
+    "path": "^0.12.7",
+    "zod": "^3.23.8"
+  },
+  "scripts": {
+    "start": "node app.js"
+  },
+  "main": "app.js"
 }

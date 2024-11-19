@@ -14,7 +14,7 @@ body {
     min-height: 100vh;
     background: linear-gradient(135deg, #1a1a2e, #16213e);
     color: #e0e0e0;
-    overflow: hidden;
+   // overflow: hidden;
 }
 
 /* Heading Style */
@@ -361,6 +361,7 @@ h1.chorehead {
 /* Main Content Layout */
 #main-content {
     display: flex;
+    flex-direction:column;
     gap: 20px;
     max-width: 1000px;
     width: 100%;
@@ -532,3 +533,14 @@ h1.chorehead {
 #toggle-button:active {
     transform: translateY(1px); /* Subtle press effect */
 }
+.requirement {
+    color: red;
+    font-size: 0.9em;
+  }
+  
+  .requirement.valid {
+    color: green;
+  }
+  
+  
+  
