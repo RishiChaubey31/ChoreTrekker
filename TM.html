@@ -80,6 +80,7 @@
                     },
                 });
 
+                
                 if (response.ok) {
                     const tasks = await response.json();
                     const tasksToDisplay = showAllTasks ? tasks : tasks.filter(task => !task.completed);
