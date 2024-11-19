@@ -94,7 +94,7 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-app.post("/Register", async (req, res) => {
+app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
   const passwordValidationResult = passwordValid.safeParse(password);
