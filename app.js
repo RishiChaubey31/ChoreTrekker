@@ -62,7 +62,7 @@ const taskSchema = new mongoose.Schema({
 const Task = mongoose.model("Task", taskSchema);
 
 // Middleware
-app.use(cors({ origin: "*" ,credentials:true})); 
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
@@ -94,7 +94,7 @@ const authenticateUser = async (req, res, next) => {
   }
 };
 
-app.post("/register", async (req, res) => {
+app.post("/Register", async (req, res) => {
   const { username, password } = req.body;
 
   const passwordValidationResult = passwordValid.safeParse(password);

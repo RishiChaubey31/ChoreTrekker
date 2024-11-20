@@ -72,48 +72,40 @@
         }
       });
 
-      document.getElementById("registrationForm").addEventListener("submit", function (event) {
-  event.preventDefault();
-
-  const formData = {
-    username: document.getElementById("username").value,
-    password: document.getElementById("password").value
-  };
-
-  fetch("/register", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(formData),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        return response.json().then(data => {
-          throw new Error(data.message || "Failed to register");
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+    
+          const formData = new FormData(this);
+          fetch("http://localhost:5500/Register", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            body: new URLSearchParams(formData).toString(),
+          })
+            .then((response) => {
+              if (!response.ok) {
+                return response.json().then(data => {
+                  throw new Error(data.message || "Failed to register");
+                });
+              }
+              return response.json();
+            })
+            .then((data) => {
+              if (data.success) {
+                alert("User registered successfully!");
+                window.location.href = "/login.html";
+              } else {
+                alert("User already exists");
+              }
+            })
+            .catch((error) => {
+              console.error("Error:", error);
+              alert(error.message);
+            });
         });
-      }
-      return response.json();
-    })
-    .then((data) => {
-      if (data.success) {
-        alert("User registered successfully!");
-        window.location.href = "/login.html";
-      } else {
-        alert("User already exists");
-      }
-    })
-    .catch((error) => {
-      console.error("Error:", error);
-      alert(error.message);
-    });
-});
-
     </script>    
   </body>
-<<<<<<< HEAD
 </html>
-
-=======
-</html>
->>>>>>> d0b62019391566c30ae1f4cf15f0be24f43ea215

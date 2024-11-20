@@ -1,171 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="./images/logo.png" />
     <title>Chores</title>
     <link rel="stylesheet" href="style.css" />
-</head>
-<body>
+  </head>
+  <body>
     <h1 class="chorehead">Manage Your Chores</h1>
     <div id="main-content">
-        <!-- Add Chores Section -->
-        <div id="add-chores">
-            <h2>ADD CHORES</h2>
-            <input id="title" type="text" placeholder="Title here" />
-            <textarea id="description" placeholder="Description here"></textarea>
-            <button id="add-button" onclick="addtodo()">Add Todo</button>
-        </div>
+      <!-- Add Chores Section -->
+      <div id="add-chores">
+        <h2>ADD CHORES</h2>
+        <input id="title" type="text" placeholder="Title here" />
+        <textarea id="description" placeholder="Description here"></textarea>
+        <button id="add-button" onclick="addtodo()">Add Todo</button>
+      </div>
 
-        <!-- Task List Section -->
-        <div id="todos">
-            <h2>TASKS</h2>
-            <button id="toggle-button" onclick="toggleTaskView()">Show All Tasks</button>
-            <div id="task-list"></div>
-        </div>
+      <!-- Task List Section -->
+      <div id="todos">
+        <h2>TASKS</h2>
+        <button id="toggle-button" onclick="toggleTaskView()">
+          Show All Tasks
+        </button>
+        <div id="task-list"></div>
+      </div>
     </div>
 
     <script>
-        let showAllTasks = false;
+      let showAllTasks = false;
 
-        function getToken() {
-            return localStorage.getItem("token");
+      function getToken() {
+        return localStorage.getItem("token");
+      }
+
+      function toggleTaskView() {
+        showAllTasks = !showAllTasks;
+        document.getElementById("toggle-button").innerText = showAllTasks
+          ? "Show Incomplete Tasks"
+          : "Show All Tasks";
+        getTasks();
+      }
+
+      async function addtodo() {
+        const title = document.getElementById("title").value.trim();
+        const description = document.getElementById("description").value.trim();
+
+        // Check if title or description is empty
+        if (!title || !description) {
+          alert("Both title and description are required!");
+          return; // Stop function execution if fields are empty
         }
-
-        function toggleTaskView() {
-            showAllTasks = !showAllTasks;
-            document.getElementById("toggle-button").innerText = showAllTasks ? "Show Incomplete Tasks" : "Show All Tasks";
-            getTasks();
-        }
-
-        async function addtodo() {
-          const title = document.getElementById("title").value.trim();
-    const description = document.getElementById("description").value.trim();
-    
-    // Check if title or description is empty
-    if (!title || !description) {
-        alert("Both title and description are required!");
-        return; // Stop function execution if fields are empty
-    }
-            const token = getToken();
-            try {
-                const response = await fetch("http://localhost:5500/tasks", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        Authorization: `Bearer ${token}`,
-                    },
-                    body: JSON.stringify({ title, description }),
-                });
-
-                if (response.ok) {
-                    alert("Task added successfully!");
-                    getTasks();
-                } else {
-                    alert("Failed to add task.");
-                }
-            } catch (error) {
-                console.error(error);
-                alert("An error occurred. Please try again.");
-            }
-        }
-
-        async function getTasks() {
-            try {
-                const token = getToken();
-                const response = await fetch("https://chore-trekker.vercel.app/tasks", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
-
-                
-                if (response.ok) {
-                    const tasks = await response.json();
-                    const tasksToDisplay = showAllTasks ? tasks : tasks.filter(task => !task.completed);
-                    displayTasks(tasksToDisplay);
-                } else {
-                    console.error("Failed to fetch tasks.");
-                }
-            } catch (error) {
-                console.error(error);
-                alert("An error occurred. Please try again.");
-            }
-        }
-
-        function displayTasks(tasks) {
-            const taskList = document.getElementById("task-list");
-            taskList.innerHTML = "";
-
-            tasks.forEach((task) => {
-                const taskElement = createTaskElement(task);
-                taskList.appendChild(taskElement);
-            });
-        }
-
-        function createTaskElement(task) {
-    const taskDiv = document.createElement("div");
-    taskDiv.classList.add("task", "custom-task-style");
-
-    const titleDiv = document.createElement("div");
-    titleDiv.classList.add("task-title");
-    titleDiv.innerHTML = task.title;
-
-    const descriptionDiv = document.createElement("div");
-    descriptionDiv.classList.add("task-description");
-    descriptionDiv.innerHTML = task.description;
-
-    const createdAtDiv = document.createElement("div");
-    const createdAt = new Date(task.createdAt).toLocaleString();
-    createdAtDiv.classList.add("task-time");
-    createdAtDiv.innerHTML = `Created on: ${createdAt}`;
-
-    const doneButton = document.createElement("button");
-    doneButton.classList.add("complete-button");
-    doneButton.innerHTML = task.completed ? "Completed" : "Mark as Done";
-    doneButton.addEventListener("click", async () => {
+        const token = getToken();
         try {
+          const response = await fetch("http://localhost:5500/tasks", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify({ title, description }),
+          });
+
+          if (response.ok) {
+            alert("Task added successfully!");
+            getTasks();
+          } else {
+            alert("Failed to add task.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      async function getTasks() {
+        try {
+          const token = getToken();
+          const response = await fetch("http://localhost:5500/tasks", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+
+          if (response.ok) {
+            const tasks = await response.json();
+            const tasksToDisplay = showAllTasks
+              ? tasks
+              : tasks.filter((task) => !task.completed);
+            displayTasks(tasksToDisplay);
+          } else {
+            console.error("Failed to fetch tasks.");
+          }
+        } catch (error) {
+          console.error(error);
+          alert("An error occurred. Please try again.");
+        }
+      }
+
+      function displayTasks(tasks) {
+        const taskList = document.getElementById("task-list");
+        taskList.innerHTML = "";
+
+        tasks.forEach((task) => {
+          const taskElement = createTaskElement(task);
+          taskList.appendChild(taskElement);
+        });
+      }
+
+      function createTaskElement(task) {
+        const taskDiv = document.createElement("div");
+        taskDiv.classList.add("task", "custom-task-style");
+
+        const titleDiv = document.createElement("div");
+        titleDiv.classList.add("task-title");
+        titleDiv.innerHTML = task.title;
+
+        const descriptionDiv = document.createElement("div");
+        descriptionDiv.classList.add("task-description");
+        descriptionDiv.innerHTML = task.description;
+
+        const createdAtDiv = document.createElement("div");
+        const createdAt = new Date(task.createdAt).toLocaleString();
+        createdAtDiv.classList.add("task-time");
+        createdAtDiv.innerHTML = `Created on: ${createdAt}`;
+
+        const doneButton = document.createElement("button");
+        doneButton.classList.add("complete-button");
+        doneButton.innerHTML = task.completed ? "Completed" : "Mark as Done";
+        doneButton.addEventListener("click", async () => {
+          try {
             const token = getToken();
             const newStatus = !task.completed;
-            const response = await fetch(`http://localhost:5500/tasks/${task._id}/complete`, {
+            const response = await fetch(
+              `http://localhost:5500/tasks/${task._id}/complete`,
+              {
                 method: "PUT",
                 headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`,
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify({ completed: newStatus }),
-            });
+              }
+            );
 
             if (response.ok) {
-                task.completed = newStatus;
-                doneButton.innerHTML = newStatus ? "Completed" : "Mark as Done";
-                titleDiv.classList.toggle("completed", newStatus);
-                descriptionDiv.classList.toggle("completed", newStatus);
+              task.completed = newStatus;
+              doneButton.innerHTML = newStatus ? "Completed" : "Mark as Done";
+              titleDiv.classList.toggle("completed", newStatus);
+              descriptionDiv.classList.toggle("completed", newStatus);
             } else {
-                alert("Failed to update task status.");
+              alert("Failed to update task status.");
             }
-        } catch (error) {
+          } catch (error) {
             console.error(error);
             alert("An error occurred. Please try again.");
+          }
+        });
+
+        taskDiv.appendChild(titleDiv);
+        taskDiv.appendChild(descriptionDiv);
+        taskDiv.appendChild(createdAtDiv);
+        taskDiv.appendChild(doneButton);
+
+        if (task.completed) {
+          titleDiv.classList.add("completed");
+          descriptionDiv.classList.add("completed");
         }
-    });
 
-    taskDiv.appendChild(titleDiv);
-    taskDiv.appendChild(descriptionDiv);
-    taskDiv.appendChild(createdAtDiv);
-    taskDiv.appendChild(doneButton);
+        return taskDiv;
+      }
 
-    if (task.completed) {
-        titleDiv.classList.add("completed");
-        descriptionDiv.classList.add("completed");
-    }
-
-    return taskDiv;
-}
-
-
-        window.onload = getTasks;
+      window.onload = getTasks;
     </script>
-</body>
+  </body>
 </html>
