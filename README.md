@@ -9,6 +9,7 @@ Chore Trekker is a web application that allows users to register, log in, and ma
 - **Description**: Each idea can include a description to provide more details.
 - **Complete**: Users can mark ideas as complete.
 - **Responsive Design**: The application is designed to work seamlessly across different devices.
+- **Time visibilty**: The user can see at what time and date the chores were created.
 
 ## Technologies Used
 
