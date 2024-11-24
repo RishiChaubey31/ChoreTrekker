@@ -5,6 +5,7 @@ Chore Trekker is a web application that allows users to register, log in, and ma
 ## Features
 
 - **User Authentication**: Users can register an account and securely log in.
+- **Input Validation**: Validate inputs
 - **Idea Management**: Users can create their ideas.
 - **Description**: Each idea can include a description to provide more details.
 - **Complete**: Users can mark ideas as complete.
