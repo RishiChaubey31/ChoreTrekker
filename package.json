@@ -12,7 +12,7 @@
     "zod": "^3.23.8"
   },
   "scripts": {
-    "start": "node app.js"
+    "start": "node script.js"
   },
   "main": "script.js"
 }
